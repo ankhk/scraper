@@ -11,13 +11,16 @@
 
 ![alt text](screenshots/настройки_Google_Chrome.png "Версия Google Chrome в настройках")
 
+
 Переходим на сайт установщика: https://sites.google.com/a/chromium.org/chromedriver/downloads
 
 ![alt text](screenshots/CurrentReleases.png "Текущие релизы")
 
+
 «Проваливаемся» по ссылке и скачиваем:
 
 ![alt text](screenshots/Index_of.png "драйвер chromedriver для Chrome Selenium")
+
 
 Устанавливаем необходимые библиотеки через <i>pip</i>:
 
@@ -140,6 +143,7 @@
  ![alt text](screenshots/result6.png "Результаты работы программы")
  ![alt text](screenshots/result7.png "Результаты работы программы")
  ![alt text](screenshots/result8.png "Результаты работы программы")
+ 
  
  В папке проекта создалась таблица с доменами и временем их открытия:
  
