@@ -14,14 +14,13 @@ from time import time
 DOMAIN = 'sbergraduate.ru'
 HOST = 'http://' + DOMAIN
 FORBIDDEN_PREFIXES = ['#', 'tel:', 'mailto:']
-links = set() # директория сохранения профиля
+links = set() # множество всех ссылок
 headers = {
 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 response = requests.get(HOST, headers=headers)
 # print(response.content)
 chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("--user-data-dir=C:/Users/Vadim/PycharmProjects/untitled") # äèðåêòîðèÿ ñîõðàíåíèÿ ïðîôèëÿ
-dcap = dict(DesiredCapabilities.CHROME)
+chrome_options.add_argument("--user-data-dir=C:/Users/Vadim/PycharmProjects/untitled") # директория сохранения профиля
 chrome = webdriver.Chrome('C:\\Users\\Vadim\\Downloads\\chromedriver_win32\\chromedriver.exe')
 
 # прогружаем в браузере сайт
