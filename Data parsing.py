@@ -14,46 +14,46 @@ from time import time
 DOMAIN = 'sbergraduate.ru'
 HOST = 'http://' + DOMAIN
 FORBIDDEN_PREFIXES = ['#', 'tel:', 'mailto:']
-links = set() # множество всех ссылок
+links = set() # РґРёСЂРµРєС‚РѕСЂРёСЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ РїСЂРѕС„РёР»СЏ
 headers = {
 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 response = requests.get(HOST, headers=headers)
 # print(response.content)
 chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("--user-data-dir=C:/Users/Vadim/PycharmProjects/untitled") # директория сохранения профиля
+chrome_options.add_argument("--user-data-dir=C:/Users/Vadim/PycharmProjects/untitled") # Г¤ГЁГ°ГҐГЄГІГ®Г°ГЁГї Г±Г®ГµГ°Г Г­ГҐГ­ГЁГї ГЇГ°Г®ГґГЁГ«Гї
 dcap = dict(DesiredCapabilities.CHROME)
 chrome = webdriver.Chrome('C:\\Users\\Vadim\\Downloads\\chromedriver_win32\\chromedriver.exe')
 
-# прогружаем в браузере сайт
+# РїСЂРѕРіСЂСѓР¶Р°РµРј РІ Р±СЂР°СѓР·РµСЂРµ СЃР°Р№С‚
 chrome.get(HOST)
-# список времнени открытия доменов в секундах
+# СЃРїРёСЃРѕРє РІСЂРµРјРЅРµРЅРё РѕС‚РєСЂС‹С‚РёСЏ РґРѕРјРµРЅРѕРІ РІ СЃРµРєСѓРЅРґР°С…
 times = []
 
 def add_all_links_recursive(url, maxdepth=1):
     #print('{:>5}'.format(len(links)), url[len(HOST):])
 
-    #глубина рекурсии не более `maxdepth`
+    # РіР»СѓР±РёРЅР° СЂРµРєСѓСЂСЃРёРё РЅРµ Р±РѕР»РµРµ `maxdepth`
 
-    # список ссылок, от которых в конце мы рекурсивно запустимся
+    # СЃРїРёСЃРѕРє СЃСЃС‹Р»РѕРє, РѕС‚ РєРѕС‚РѕСЂС‹С… РІ РєРѕРЅС†Рµ РјС‹ СЂРµРєСѓСЂСЃРёРІРЅРѕ Р·Р°РїСѓСЃС‚РёРјСЃСЏ
     links_to_handle_recursive = []
-    #получаем html код страницы
+    # РїРѕР»СѓС‡Р°РµРј html РєРѕРґ СЃС‚СЂР°РЅРёС†С‹
     request = requests.get(url, headers=headers)
-    # парсим его с помощью BeautifulSoup
+    # РїР°СЂСЃРёРј РµРіРѕ СЃ РїРѕРјРѕС‰СЊСЋ BeautifulSoup
     soup = BeautifulSoup(request.content, 'lxml')
-    # рассматриваем все теги <a>, при том, что href - не пустые
+    # СЂР°СЃСЃРјР°С‚СЂРёРІР°РµРј РІСЃРµ С‚РµРіРё <a>, РїСЂРё С‚РѕРј, С‡С‚Рѕ href - РЅРµ РїСѓСЃС‚С‹Рµ
     for tag_a in soup.find_all('a', href=lambda v: v is not None):
         link = tag_a['href']
 
-        # если ссылка не начинается с одного из запрещенных префиксов
+        # РµСЃР»Рё СЃСЃС‹Р»РєР° РЅРµ РЅР°С‡РёРЅР°РµС‚СЃСЏ СЃ РѕРґРЅРѕРіРѕ РёР· Р·Р°РїСЂРµС‰РµРЅРЅС‹С… РїСЂРµС„РёРєСЃРѕРІ
         if all(not link.startswith(prefix) for prefix in FORBIDDEN_PREFIXES):
-            # проверяем, является ли ссылка относительной
-            # например, `/oplata` - это относительная ссылка
-            # `http://101-rosa.ru/oplata - это абсолютная ссылка
+            # РїСЂРѕРІРµСЂСЏРµРј, СЏРІР»СЏРµС‚СЃСЏ Р»Рё СЃСЃС‹Р»РєР° РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕР№
+            # РЅР°РїСЂРёРјРµСЂ, `/oplata` - СЌС‚Рѕ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅР°СЏ СЃСЃС‹Р»РєР°
+            # http://101-rosa.ru/oplata - - СЌС‚Рѕ Р°Р±СЃРѕР»СЋС‚РЅР°СЏ СЃСЃС‹Р»РєР°
             if link.startswith('/') and not link.startswith('//'):
-                # преобразуем относительную ссылку в абсолютную
+                # РїСЂРµРѕР±СЂР°Р·СѓРµРј РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅСѓСЋ СЃСЃС‹Р»РєСѓ РІ Р°Р±СЃРѕР»СЋС‚РЅСѓСЋ
                 link = HOST + link
-            # проверяем, что ссылка ведет на нужный домен
-            # и что мы еще' не обрабатывали такую ссылку
+            # РїСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ СЃСЃС‹Р»РєР° РІРµРґРµС‚ РЅР° РЅСѓР¶РЅС‹Р№ РґРѕРјРµРЅ
+            # Рё С‡С‚Рѕ РјС‹ РµС‰Рµ РЅРµ РѕР±СЂР°Р±Р°С‚С‹РІР°Р»Рё С‚Р°РєСѓСЋ СЃСЃС‹Р»РєСѓ
             if urlparse(link).netloc == DOMAIN and link not in links:
                 links.add(link)
                 links_to_handle_recursive.append(link)
@@ -63,13 +63,13 @@ def add_all_links_recursive(url, maxdepth=1):
             add_all_links_recursive(link, maxdepth=maxdepth - 1)
 
 def main():
-    print("\n Происходит выгрузка доменов сайта " + DOMAIN)
+    print("\n РџСЂРѕРёСЃС…РѕРґРёС‚ РІС‹РіСЂСѓР·РєР° РґРѕРјРµРЅРѕРІ СЃР°Р№С‚Р° " + DOMAIN)
     urls = []
     total_time = 0
     add_all_links_recursive(HOST + '/')
     for link in links:
         start = time()
-        # прогружаем в браузере каждый домен
+        # РїСЂРѕРіСЂСѓР¶Р°РµРј РІ Р±СЂР°СѓР·РµСЂРµ РєР°Р¶РґС‹Р№ РґРѕРјРµРЅ
         result = chrome.get(link)
         end = time()
         urls.append(link)
@@ -78,13 +78,13 @@ def main():
         total_time += s
 
     print("\n")
-    # Ограничение вывода строк - максимум 10 000 (чтобы не выводило многоточия)
+    # РћРіСЂР°РЅРёС‡РµРЅРёРµ РІС‹РІРѕРґР° СЃС‚СЂРѕРє - РјР°РєСЃРёРјСѓРј 10 000 (С‡С‚РѕР±С‹ РЅРµ РІС‹РІРѕРґРёР»Рѕ РјРЅРѕРіРѕС‚РѕС‡РёСЏ)
     pd.options.display.max_rows = 10000
-    df = pd.DataFrame({'Домен': urls, 'Время открытия, сек': times})
-    writer = pd.ExcelWriter('C:/Users/Vadim/Desktop/Data parsing/домены.xlsx')
-    df.to_excel(writer, 'Лист1')
+    df = pd.DataFrame({'Р”РѕРјРµРЅ': urls, 'Р’СЂРµРјСЏ РѕС‚РєСЂС‹С‚РёСЏ, СЃРµРє': times})
+    writer = pd.ExcelWriter('C:/Users/Vadim/Desktop/Data parsing/Г¤Г®Г¬ГҐГ­Г».xlsx')
+    df.to_excel(writer, 'Р›РёСЃС‚1')
     writer.save()
-    print(" Домены с временем их открытия выгружены в таблицу Excel в папке проекта.\n Общее время загрузки составило", total_time , "сек")
+    print(" Р”РѕРјРµРЅС‹ СЃ РІСЂРµРјРµРЅРµРј РёС… РѕС‚РєСЂС‹С‚РёСЏ РІС‹РіСЂСѓР¶РµРЅС‹ РІ С‚Р°Р±Р»РёС†Сѓ Excel РІ РїР°РїРєРµ РїСЂРѕРµРєС‚Р°.\n РћР±С‰РµРµ РІСЂРµРјСЏ Р·Р°РіСЂСѓР·РєРё СЃРѕСЃС‚Р°РІРёР»Рѕ", total_time , "СЃРµРє")
 
 
 
