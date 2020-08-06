@@ -12,15 +12,7 @@
 ![alt text](screenshots/настройки_Google_Chrome.png "Версия Google Chrome в настройках")
 
 
-Переходим на сайт установщика: https://sites.google.com/a/chromium.org/chromedriver/downloads
-
-![alt text](screenshots/CurrentReleases.png "Текущие релизы")
-
-
-«Проваливаемся» по ссылке и скачиваем:
-
-![alt text](screenshots/Index_of.png "драйвер chromedriver для Chrome Selenium")
-
+Переходим на сайт установщика: https://sites.google.com/a/chromium.org/chromedriver/downloads, «проваливаемся» по ссылке и скачиваем нужную версию.
 
 Устанавливаем необходимые библиотеки через <i>pip</i>:
 
@@ -134,23 +126,6 @@
     if __name__ == '__main__':
         main()
 
- ## Результаты работы программы:
- ![alt text](screenshots/result1.png "Результаты работы программы")
- ![alt text](screenshots/result2.png "Результаты работы программы")
- ![alt text](screenshots/result3.png "Результаты работы программы")
- ![alt text](screenshots/result4.png "Результаты работы программы")
- ![alt text](screenshots/result5.png "Результаты работы программы")
- ![alt text](screenshots/result6.png "Результаты работы программы")
- ![alt text](screenshots/result7.png "Результаты работы программы")
- ![alt text](screenshots/result8.png "Результаты работы программы")
- 
- 
- В папке проекта создалась таблица с доменами и временем их открытия:
- 
- ![alt text](screenshots/csv_in_project.png "Созданный в папке проекта CSV")
- 
- ![alt text](screenshots/csv1.png "Выгруженные домены с временем их открытия")
- ![alt text](screenshots/csv2.png "Выгруженные домены с временем их открытия")
- 
+
  ## Резюме
 Сделали парсер, который фиксирует время открытия всех страниц сайта, поданного на вход. Для этого использовали библиотеки [Selenium](https://pypi.org/project/selenium/), [BeautifulSoup](https://pypi.org/project/bs4/) для парсинга, time для вычисления времени открытия страниц, pandas для создания датафрейма и добавления туда результатов и последующей выгрузкой в таблицу <i>Excel</i>.
