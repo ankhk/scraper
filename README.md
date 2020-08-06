@@ -7,10 +7,7 @@
 
 Для этого предварительно установим драйвер chromedriver для Chrome Selenium: мы должны установить именно ту версию, которая была бы совместима с установленным Google Chrome на нашем ПК или VDS.
 
-Зайдем в настройки Google Chrome, чтобы посмотреть его версию:
-
-![alt text](screenshots/настройки_Google_Chrome.png "Версия Google Chrome в настройках")
-
+Зайдем в настройки Google Chrome, чтобы посмотреть его версию.
 
 Переходим на сайт установщика: https://sites.google.com/a/chromium.org/chromedriver/downloads, «проваливаемся» по ссылке и скачиваем нужную версию.
 
