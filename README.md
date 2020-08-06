@@ -9,7 +9,7 @@
 
 Зайдем в настройки Google Chrome, чтобы посмотреть его версию.
 
-Переходим на сайт установщика: https://sites.google.com/a/chromium.org/chromedriver/downloads, «проваливаемся» по ссылке и скачиваем нужную версию.
+Переходим на сайт [установщика](https://sites.google.com/a/chromium.org/chromedriver/downloads) и скачиваем нужную версию.
 
 Устанавливаем необходимые библиотеки через <i>pip</i>:
 
